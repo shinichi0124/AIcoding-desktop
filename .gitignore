@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Local secrets (keys live in %USERPROFILE%\.ai-coding-desktop, never here)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+bridge_token.txt
+
+# Logs / runtime
+*.log
+logs/

@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>AI Coding Desktop</title>
+<style>body{font-family:Segoe UI,sans-serif;max-width:720px;margin:40px auto;padding:0 16px;color:#222}code{background:#f3f4f6;padding:0 4px;border-radius:4px}</style>
+</head><body>
+<h1>AI Coding Desktop</h1>
+<p>与 Kimi/xAI Code-Web 同一套交互的整合前端（v1.3.2，未打包 zip）。Tab 用各家官网 logo 切换引擎模组。顶栏 G 砖 + Coding platform。聊天记录支持全选 / 多选 / 删除所选。</p>
+<p><strong>Kimi（v1.3.1 起）：</strong>不接 <code>kimi acp</code>，改接 Kimi 自带的本地服务（kap-server，HTTP + WebSocket）。先挂正在运行的 Kimi Code 桌面实例（token 只走请求头，不进日志），挂不上才起 <code>kimi web --no-open</code>；删除对话由 Kimi 自己处理（<code>POST /sessions/{id}:delete</code>），不再改写它的索引文件。设置里可切回 ACP 通道。</p>
+<p><strong>其它模组：</strong>xAI / Qwen Code / Codex / Claude 走 ACP（Qwen 只接 <code>qwen</code>，不接 <code>qwencloud</code>；Claude 官方 CLI 没有 ACP 则提示开终端）。DeepSeek 隐藏启动官方 <code>dsh</code>（不弹 CMD、不嵌其网页）。</p>
+<p>日志：<code>%LOCALAPPDATA%\AI-Coding-Desktop\logs</code>，先看 <code>LATEST</code> 指向的 <code>IMPORTANT.log</code>。配置：<code>~/.ai-coding-desktop/config.json</code>（<code>kimi_engine</code>: <code>kap</code> | <code>acp</code>）。审计：<code>AUDIT_2026-08-23.md</code>；Kimi 引擎计划：<code>PLAN_kimi-kap-adapter_20261017.md</code>。</p>
+</body></html>

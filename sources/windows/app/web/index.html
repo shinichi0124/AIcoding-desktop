@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Coding Desktop</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div class="brand" title="Coding platform" aria-label="Coding platform">
+        <span class="brand-mark" aria-hidden="true">
+          <img class="g-logo" src="/g-logo.png" alt="" />
+        </span>
+        <span class="brand-name">
+          <span class="brand-coding">Coding</span>
+          <span class="brand-platform">platform</span>
+        </span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="btnNew" data-tip="newChat" type="button" title="新建聊天" aria-label="新建聊天">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+        </button>
+        <button class="icon-btn" id="btnTerm" data-tip="openTerm" type="button" title="打开终端" aria-label="打开终端">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/></svg>
+        </button>
+        <button class="icon-btn" id="btnSet" data-tip="settings" type="button" title="设置" aria-label="设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <button class="icon-btn" id="btnLang" data-tip="langTip" type="button" title="English" aria-label="English">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        </button>
+      </div>
+      <div class="spacer"></div>
+      <nav class="tabs" id="tabs" aria-label="AI modules"></nav>
+    </header>
+    <div class="logstrip" id="alertBar" title="IMPORTANT.log"></div>
+    <div class="main">
+      <aside class="side">
+        <div class="side-head">
+          <h2 data-i18n="history">聊天记录</h2>
+          <button class="icon-btn sm" id="btnManageSessions" data-tip="manageSessions" type="button" title="管理会话" aria-label="管理会话">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          </button>
+        </div>
+        <div id="sessionToolbar" class="session-toolbar" hidden>
+          <button type="button" class="btn-mini" id="btnSelectAll" data-i18n="selectAll">全选</button>
+          <button type="button" class="btn-mini" id="btnSelectNone" data-i18n="selectNone">全不选</button>
+          <button type="button" class="btn-mini danger" id="btnDeleteSelected" data-i18n="deleteSelected" disabled>删除所选</button>
+          <button type="button" class="btn-mini accent" id="btnManageDone" data-i18n="manageDone">完成</button>
+        </div>
+        <div class="sessions" id="sessions"></div>
+        <div id="sessionEmpty" class="side-empty" hidden data-i18n="noSessions">暂无历史会话</div>
+      </aside>
+      <section class="chat">
+        <div class="tab-alert" id="tabAlert" hidden></div>
+        <div class="msgs" id="msgs"></div>
+        <div class="status" id="status"></div>
+        <div class="modelbar" id="modelBar"></div>
+        <div class="composer">
+          <textarea id="input" placeholder="发给当前模组…"></textarea>
+          <button class="icon-send" id="btnSend" type="button" title="发送" aria-label="发送">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 2 11 13"></path>
+              <path d="M22 2 15 22 11 13 2 9 22 2z"></path>
+            </svg>
+          </button>
+          <button class="icon-stop" id="btnCancel" type="button" title="停止" aria-label="停止">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+            </svg>
+          </button>
+        </div>
+      </section>
+    </div>
+    <footer class="footer">
+      <span>Copyright © 2026 by Dr. GENG Xun</span>
+      <span id="ver">v%%VERSION%%</span>
+    </footer>
+  </div>
+  <div class="modal" id="modal">
+    <div class="panel">
+      <div class="panel-head">
+        <h3 data-i18n="settings">设置</h3>
+        <button class="icon-btn" id="btnCloseSet" data-tip="close" type="button" title="关闭" aria-label="关闭">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="hint" data-i18n="setHint">CLI 路径与 API 绑定分行。打开 = 可见终端。密钥只存本机，不进日志。</p>
+      <div id="cliRows"></div>
+      <h3 data-i18n="apiBlock">API 绑定</h3>
+      <div id="apiRows"></div>
+      <div class="row">
+        <label data-i18n="workspace">工作区</label>
+        <input id="workspace" />
+      </div>
+      <div class="row" data-tip="closeWinTip" title="点击窗口关闭按钮时">
+        <label data-i18n="closeWin">关窗</label>
+        <div class="radios" role="radiogroup" aria-label="关窗">
+          <label class="radio"><input type="radio" name="closeAction" value="tray" /><span data-i18n="closeTray">到托盘</span></label>
+          <label class="radio"><input type="radio" name="closeAction" value="quit" checked /><span data-i18n="closeQuit">直接关</span></label>
+        </div>
+      </div>
+      <div class="row" data-tip="kimiEngineTip" title="Kimi 引擎">
+        <label data-i18n="kimiEngine">Kimi 引擎</label>
+        <div class="radios" role="radiogroup">
+          <label class="radio"><input type="radio" name="kimiEngine" value="kap" checked /><span data-i18n="kimiEngineKap">API</span></label>
+          <label class="radio"><input type="radio" name="kimiEngine" value="acp" /><span data-i18n="kimiEngineAcp">ACP</span></label>
+        </div>
+      </div>
+      <div class="row settings-actions">
+        <button class="icon-btn" id="btnVerify" data-tip="verify" type="button" title="验证连接" aria-label="验证连接">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+        </button>
+        <button class="icon-btn" id="btnLogs" data-tip="openLogs" type="button" title="打开日志" aria-label="打开日志">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.2 3.9A2 2 0 0 0 7.5 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></svg>
+        </button>
+        <button class="icon-btn" id="btnImp" data-tip="openImportant" type="button" title="打开 IMPORTANT" aria-label="打开 IMPORTANT">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        </button>
+      </div>
+      <div id="verifyOut" class="hint"></div>
+    </div>
+  </div>
+  <div id="ctxMenu" class="ctx-menu" hidden>
+    <button type="button" id="ctxDelete" class="ctx-item" data-i18n="ctxDeleteSession">删除该会话</button>
+  </div>
+  <div class="modal" id="confirmModal">
+    <div class="panel confirm-panel">
+      <h3 data-i18n="confirmDeleteTitle">确认删除</h3>
+      <p id="confirmMsg" class="confirm-msg"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-mini" id="btnConfirmNo" data-i18n="cancelDlg">取消</button>
+        <button type="button" class="btn-mini danger" id="btnConfirmYes" data-i18n="confirmDeleteYes">删除</button>
+      </div>
+    </div>
+  </div>
+  <script>window.ACD_TOKEN = "%%TOKEN%%";</script>
+  <script src="/app.js"></script>
+</body>
+</html>
